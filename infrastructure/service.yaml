@@ -12,21 +12,6 @@
 #       targetPort: 5000  # Container Port
 #   type: ClusterIP  # Default type (internal access only)
 # ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: flask-app-service
-  namespace: flask-app
-spec:
-  selector:
-    app: flask-app
-  ports:
-    - protocol: TCP
-      port: 5000
-      targetPort: 5000
-      nodePort: 30080  # Exposes it on this node port
-  type: NodePort
-# ---
 # apiVersion: v1
 # kind: Service
 # metadata:
@@ -37,6 +22,21 @@ spec:
 #     app: flask-app
 #   ports:
 #     - protocol: TCP
-#       port: 80
+#       port: 5000
 #       targetPort: 5000
-#   type: LoadBalancer
+#       nodePort: 30080  # Exposes it on this node port
+#   type: NodePort
+# ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-app-service
+  namespace: flask-app
+spec:
+  selector:
+    app: flask-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: LoadBalancer
